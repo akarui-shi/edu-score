@@ -31,6 +31,4 @@ public class School {
     private Integer passesUnder160;
     @Column(name = "address")
     private String address;
-
-
 }

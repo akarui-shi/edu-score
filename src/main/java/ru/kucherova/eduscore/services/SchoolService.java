@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import ru.kucherova.eduscore.repositories.UserRepository;
 
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -24,6 +26,21 @@ public class SchoolService {
 
     public School getSchoolById(Long id) {
         return schoolRepository.findById(id).orElse(null);
+    }
+
+    public List<School> getTopRatedSchoolsByAdmAreaAndCountAndYear(String admArea, int count, String year) {
+        List<School> schools;
+        if (admArea != null && year != null) {
+            schools = schoolRepository.findByAdmAreaAndYear(admArea, year);
+        } else if (admArea != null) {
+            schools = schoolRepository.findByAdmArea(admArea);
+        } else if (year != null) {
+            schools = schoolRepository.findByYear(year);
+        } else schools = schoolRepository.findAll();
+
+        schools.sort(Comparator.comparing(School::getPassesOver220).reversed().thenComparing(School::getPassesUnder160));
+
+        return schools.stream().limit(count).collect(Collectors.toList());
     }
 
     public User getUserByPrincipal(Principal principal) {
