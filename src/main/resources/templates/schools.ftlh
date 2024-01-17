@@ -22,6 +22,7 @@
             font-size: 40px;
             letter-spacing: 0;
             line-height: 48px;
+            text-decoration: none;
         }
 
         .user-info {
@@ -31,7 +32,7 @@
 
         .user-info h3 {
             margin-right: 20px;
-            font-size: 16px; /* Изменение размера шрифта */
+            font-size: 16px;
             margin-top: 2px;
         }
 
@@ -57,6 +58,17 @@
         .login-button a {
             color: white;
             text-decoration: none; /* Чтобы убрать подчеркивание, если это необходимо */
+        }
+
+        .admin-panel {
+            background-color: rgba(74, 96, 161, 1);
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            margin-top: 0px;
+            margin-left: 10px;
         }
 
         form {
@@ -134,7 +146,7 @@
                         // iconGlyph: 'education',
                         // iconGlyphColor: '#4A60A1FF',
                         iconColor: '#4A60A1FF',
-                        iconImageSize: [45, 45]
+                        iconImageSize: [60, 60]
                     });
 
                 map.geoObjects.add(placemark);
@@ -147,20 +159,20 @@
 <body>
 <div class="header">
     <h1>EduScore</h1>
-    <div class="user-info">
+    <div class="user-info d-flex justify-content-center"> <!-- Добавлены новые классы для центрирования -->
         <#if user.email??>
             <h3>${user.email}</h3>
             <form action="/logout" method="post">
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
                 <input type="submit" value="Выйти" class="unlogin-button"/>
             </form>
-            <#if user.isAdmin()>
-                <a href="/admin">Панель администратора</a>
-            </#if>
         <#else>
             <button class="login-button" type="button">
                 <a href="/login">Войти</a>
             </button>
+        </#if>
+        <#if user.isAdmin()>
+            <a href="/admin" class="admin-panel admin-panel text-center ">Панель администратора</a>
         </#if>
     </div>
 </div>

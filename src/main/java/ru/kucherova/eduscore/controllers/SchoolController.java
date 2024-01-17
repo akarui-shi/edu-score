@@ -31,8 +31,9 @@ public class SchoolController {
     }
 
     @GetMapping("/school/{id}")
-    public String schoolInfo(@PathVariable Long id, Model model){
+    public String schoolInfo(@PathVariable Long id, Principal principal, Model model){
         model.addAttribute("school", schoolService.getSchoolById(id));
+        model.addAttribute("user", schoolService.getUserByPrincipal(principal));
         return "school-info";
     }
 
