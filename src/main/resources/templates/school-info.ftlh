@@ -4,6 +4,9 @@
     <title>EduScore</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
         .header {
             background-color: rgba(237, 239, 246, 1);
             width: 100%;

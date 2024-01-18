@@ -6,6 +6,9 @@
     <title>EduScore</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
         .header {
             background-color: rgba(237, 239, 246, 1);
             width: 100%;
@@ -102,13 +105,13 @@
         }
 
         #map {
-            width: calc(100% - 60px);
+            width: calc(100% - 200px);
             height: 550px;
             margin-top: 20px;
             border-radius: 10px;
             overflow: hidden;
-            margin-left: 30px; /* Добавлен отступ слева */
-            margin-right: 30px; /* Добавлен отступ справа */
+            margin-left: 100px; /* Добавлен отступ слева */
+            margin-right: 100px; /* Добавлен отступ справа */
         }
     </style>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=327bb41d-e696-4a51-84ea-9b024ac1bd49&lang=ru_RU" type="text/javascript"></script>
@@ -142,9 +145,6 @@
                         balloonContentBody: "${school.name}",
                         balloonContentFooter: `<a href="/school/${school.id?c}">Подробнее...</a>`,
                     }, {
-                        // preset: "islands#glyphIcon",
-                        // iconGlyph: 'education',
-                        // iconGlyphColor: '#4A60A1FF',
                         iconColor: '#4A60A1FF',
                         iconImageSize: [60, 60]
                     });
@@ -176,7 +176,21 @@
         </#if>
     </div>
 </div>
+<div class="container mt-3 text-center">
+    <h2>Добро пожаловать в EduScore!</h2>
+</div>
 
+<div class="container" style="margin-bottom: 50px; margin-top: 20px; font-size: 18px;">
+    <p>
+        EduScore - это клиентоориентированное веб-приложение, разработанное для помощи вам выбрать лучшую школу для вашего ребенка с учетом результатов ЕГЭ.
+    </p>
+    <p>
+        Наш сервис анализирует открытые данные по результатам ЕГЭ и предоставляет вам рейтинг лучших школ в вашем регионе. Вы можете выбирать школы в соответствии с административным округом, годом и другими параметрами.
+    </p>
+    <p>
+        Используйте карту для визуального отображения местоположения школ и таблицу с подробной информацией для принятия взвешенного решения. EduScore - ваш надежный партнер в выборе образовательного учреждения для вашего ребенка.
+    </p>
+</div>
 <div class="container">
     <form action="/" method="get">
         <div class="row">
@@ -211,7 +225,7 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <label for="count">Количество:</label>
+                <label for="count">Топ n по рейтингу:</label>
                 <input type="number" name="count" id="count" value="10" class="form-control">
             </div>
             <div class="col-md-3">
@@ -222,6 +236,37 @@
     </form>
 </div>
 <div id="map"></div>
+<div class="container mt-5">
+    <h2>Список лучших школ</h2>
+    <p>Наши рекомендации основаны на анализе результатов ЕГЭ. Ниже представлены лучшие школы, учитывая ваши критерии:</p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Рейтинг</th>
+            <th scope="col">Название</th>
+            <th scope="col">Адрес</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <#assign count = 0>
+        <#list schools as school>
+            <#assign count = count + 1>
+            <tr>
+                <th scope="row">${count}</th>
+                <td>${school.name}</td>
+                <td>${school.address}</td>
+                <td><#if user.email??>
+                        <a href="/school/${school.id?c}">Подробнее...</a>
+                    <#else>
+                        <a href="/school/${school.id?c}">Подробнее...<br>(требуется авторизация)</a>
+                    </#if>
+                </td>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

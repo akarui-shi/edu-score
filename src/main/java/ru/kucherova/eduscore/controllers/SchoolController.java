@@ -36,5 +36,4 @@ public class SchoolController {
         model.addAttribute("user", schoolService.getUserByPrincipal(principal));
         return "school-info";
     }
-
 }
