@@ -18,7 +18,7 @@ public class School {
     @Column(name = "name")
     private String name;
     @Column(name = "global_id")
-    private String globalId;
+    private Long globalId;
     @Column(name = "year")
     private String year;
     @Column(name = "adm_area")
